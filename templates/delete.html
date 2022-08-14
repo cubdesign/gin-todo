@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+ <h1>Todo</h1>
+<h2>削除確認</h2>
+<p>本当に削除しますか？</p>
+<ul>
+    <li>内容： {{ .todo.Text }}</li>
+    <li>状態： {{ .todo.Status }}</li>
+    <li>作成時間： {{ .todo.CreatedAt }}</li>
+</ul>
+
+ <form method="post" action="/delete/{{ .todo.ID }}">
+     <p><input type="submit" value="削除"></p>
+     <p><a href="/">戻る</a></p>
+ </form>
+
+</body>
+</html>
