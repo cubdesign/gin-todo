@@ -15,53 +15,53 @@ type Todo struct {
 }
 
 // DBコネクション
-var DB *gorm.DB
-var err error
+var db *gorm.DB
 
 // DBの初期化
-func dbInit() {
-	DB, err = gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
+func dbInit() *gorm.DB {
+	db, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
 	if err != nil {
 		panic("データベース開けず")
 	}
-	DB.AutoMigrate(&Todo{})
+	db.AutoMigrate(&Todo{})
+	return db
 }
 
 func dbInsert(text string, status string) {
-	DB.Create(&Todo{Text: text, Status: status})
+	db.Create(&Todo{Text: text, Status: status})
 }
 
 func dbGetAll() []Todo {
 	var todos []Todo
-	DB.Order("created_at desc").Find(&todos)
+	db.Order("created_at desc").Find(&todos)
 	return todos
 }
 
 func dbGetOne(id int) Todo {
 	var todo Todo
-	DB.First(&todo, id)
+	db.First(&todo, id)
 	return todo
 }
 
 func dbUpdate(id int, text string, status string) {
 	var todo Todo
-	DB.First(&todo, id)
+	db.First(&todo, id)
 	todo.Text = text
 	todo.Status = status
-	DB.Save(&todo)
+	db.Save(&todo)
 }
 
 func dbDelete(id int) {
 	var todo Todo
-	DB.First(&todo, id)
-	DB.Delete(&todo)
+	db.First(&todo, id)
+	db.Delete(&todo)
 }
 
 func main() {
 	router := gin.Default()
 	router.LoadHTMLGlob("templates/*.html")
 
-	dbInit()
+	db = dbInit()
 
 	router.GET("/", func(ctx *gin.Context) {
 		todos := dbGetAll()
