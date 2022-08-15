@@ -1,30 +1,39 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>Sample App</title>
+    <title>Todo</title>
 </head>
 <body>
 <h1>Todo</h1>
 <h2>追加</h2>
-<form method="post" action="/new">
-    <p>内容 <input type="text" name="text" size="30" placeholder="入力してください"></p>
-    <p>状態
-        　　<select name="status">
-            <option value="未実行">未実行</option>
-            <option value="実行中">実行中</option>
-            <option value="終了">終了</option>
-        </select>
-    </p>
-    <p><input type="submit" value="Send"></p>
-</form>
-<ul>
-    {{ range .todos }}
-    <li>
-        内容： {{ .Text }}、状態： {{ .Status }}
-        <label><a href="/detail/{{ .ID }}">編集</a></label>
-        <label><a href="/delete_check/{{ .ID }}">削除</a></label>
-    </li>
-    {{ end }}
-</ul>
+<div>
+    <form method="post" action="/new">
+        <div>
+            <label for="text">内容</label>
+            <input type="text" id="text" name="text" size="30" placeholder="入力してください">
+        </div>
+        <div>
+            <label for="status">状態</label>
+            <select id="status" name="status">
+                <option value="未実行">未実行</option>
+                <option value="実行中">実行中</option>
+                <option value="終了">終了</option>
+            </select>
+        </div>
+        <div><input type="submit" value="Send"></div>
+    </form>
+</div>
+<div>
+    <ul>
+        {{ range .todos }}
+        <li>
+            内容： {{ .Text }}、状態： {{ .Status }}
+            <span><a href="/detail/{{ .ID }}">編集</a></span>
+            <span><a href="/delete_check/{{ .ID }}">削除</a></span>
+        </li>
+        {{ end }}
+    </ul>
+</div>
+
 </body>
 </html>

@@ -2,36 +2,33 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>編集 | Todo</title>
 </head>
 <body>
 <h1>Todo</h1>
 <h2>編集</h2>
 
 <form method="post" action="/update/{{ .todo.ID }}">
-    <p>内容 <input type="text" name="test" size="30" value="{{ .todo.Text }}"></p>
-    <p>状態
-        　<select name="status">
-            {{ if eq .todo.Status "未実行" }}
-            <option value="未実行" selected>未実行</option>
-            <option value="実行中">実行中</option>
-            <option value="終了">終了</option>
-            {{ else if eq .todo.Status "実行中" }}
-            <option value="未実行">未実行</option>
-            <option value="実行中" selected>実行中</option>
-            <option value="終了">終了</option>
-            {{ else }}
-            <option value="未実行">未実行</option>
-            <option value="実行中">実行中</option>
-            <option value="終了" selected>終了</option>
-            {{ end }}
+    <div>
+        <label for="text">内容</label>
+        <input type="text" id="text" name="test" size="30" value="{{ .todo.Text }}">
+    </div>
+    <div>
+        <label for="status">状態</label>
+        <select id="status" name="status">
+            <option value="未実行" {{ if eq .todo.Status
+            "未実行" }}selected="selected"{{ end }} >未実行</option>
+            <option value="実行中" {{ if eq .todo.Status
+            "実行中" }}selected="selected"{{ end }} >実行中</option>
+            <option value="終了" {{ if eq .todo.Status
+            "終了" }}selected="selected"{{ end }} >終了</option>
         </select>
-    </p>
-    <p>
+    </div>
+    <div>
         <input type="submit" value="Send">
-    </p>
-    <p><a href="/">戻る</a></p>
+    </div>
 </form>
 
+<div><a href="/">戻る</a></div>
 </body>
 </html>
